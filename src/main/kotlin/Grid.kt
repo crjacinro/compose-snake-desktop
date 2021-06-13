@@ -11,14 +11,24 @@ import androidx.compose.ui.unit.dp
 
 @Suppress("FunctionName")
 @Composable
-fun SnakeGrid(gridType: GridType) {
-    val modifier = Modifier
+fun SnakeGrid(modifier: Modifier, gridType: GridType) {
+    val boxModifier = modifier
         .padding(0.dp)
         .border(getBorderStroke(gridType))
         .size(GRID_SIZE_DP)
         .background(getBackground(gridType))
 
-    Box(modifier = modifier)
+    Box(modifier = boxModifier)
+}
+
+fun List<List<GridType>>.toLinearList(): List<GridType> {
+    val mutableList = mutableListOf<GridType>()
+    for (i in this.indices) {
+        for (j in this[i].indices) {
+            mutableList.add(this[i][j])
+        }
+    }
+    return mutableList.toList()
 }
 
 private fun getBorderStroke(gridType: GridType) =

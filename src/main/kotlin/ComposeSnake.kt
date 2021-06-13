@@ -6,7 +6,13 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.IntSize
 
 fun main() = Window(
@@ -24,17 +30,37 @@ fun main() = Window(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SnakeApp() {
-    SnakeWindow(getInitSnakeGridData())
+    var gridData = remember { mutableStateOf(getInitSnakeGridData()) }
+
+    val eventModifier = Modifier.onPreviewKeyEvent {
+        when (it.key) {
+            Key.DirectionUp -> {
+                true
+            }
+            Key.DirectionDown -> {
+                true
+            }
+            Key.DirectionRight -> {
+                true
+            }
+            Key.DirectionLeft -> {
+                true
+            }
+            else -> false
+        }
+    }
+
+    SnakeWindow(eventModifier, gridData.value.toLinearList())
 }
 
 @Suppress("FunctionName")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SnakeWindow(gridData: List<GridType>) {
-    LazyVerticalGrid(cells = GridCells.Fixed(NUMBER_OF_GRIDS_PER_SIDE)) {
+fun SnakeWindow(modifier: Modifier, gridData: List<GridType>) {
+    LazyVerticalGrid(modifier = modifier, cells = GridCells.Fixed(NUMBER_OF_GRIDS_PER_SIDE)) {
         items(gridData) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                SnakeGrid(it)
+            Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+                SnakeGrid(modifier = modifier, it)
             }
         }
     }

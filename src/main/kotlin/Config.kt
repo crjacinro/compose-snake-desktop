@@ -10,8 +10,8 @@ val GRID_SIZE_DP = GRID_SIZE.dp
 
 // Game Configuration
 const val SNAKE_INIT_SIZE = 10
-const val SNAKE_INIT_POSITION = 0
-const val FOOD_INIT_POSITION = 800 - NUMBER_OF_GRIDS_PER_SIDE + NUMBER_OF_GRIDS_PER_SIDE / 2
+val SNAKE_INIT_POSITION = Position(0, 0)
+val FOOD_INIT_POSITION = Position(19, 19)
 
 // UI Configuration
 val SNAKE_BODY_COLOR = Color.White
