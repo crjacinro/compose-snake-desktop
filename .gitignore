@@ -49,6 +49,7 @@ hs_err_pid*
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/Compose-Snake.iml
 
 # Gradle:
 .idea/gradle.xml
