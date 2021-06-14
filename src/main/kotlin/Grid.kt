@@ -35,14 +35,16 @@ private fun getBorderStroke(gridType: GridType) =
     when (gridType) {
         GridType.BACKGROUND -> BorderStroke(0.dp, BACKGROUND_COLOR)
         GridType.FOOD -> BorderStroke(0.dp, SNAKE_FOOD_COLOR)
-        GridType.BODY, GridType.HEAD -> BorderStroke(1.dp, Color.Gray)
+        GridType.BODY -> BorderStroke(1.dp, Color.Gray)
+        GridType.HEAD -> BorderStroke(0.dp, SNAKE_HEAD_COLOR)
     }
 
 private fun getBackground(gridType: GridType) =
     when (gridType) {
         GridType.BACKGROUND -> BACKGROUND_COLOR
         GridType.FOOD -> SNAKE_FOOD_COLOR
-        GridType.BODY, GridType.HEAD -> SNAKE_BODY_COLOR
+        GridType.BODY -> SNAKE_BODY_COLOR
+        GridType.HEAD -> SNAKE_HEAD_COLOR
     }
 
 enum class GridType {

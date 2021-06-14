@@ -17,5 +17,6 @@ val FOOD_INIT_POSITION = Position(19, 19)
 
 // UI Configuration
 val SNAKE_BODY_COLOR = Color.White
+val SNAKE_HEAD_COLOR = Color.DarkGray
 val SNAKE_FOOD_COLOR = Color.Red
 val BACKGROUND_COLOR = Color.Black
