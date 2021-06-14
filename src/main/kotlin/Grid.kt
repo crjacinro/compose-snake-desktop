@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.dp
 
 @Suppress("FunctionName")
 @Composable
-fun SnakeGrid(modifier: Modifier, gridType: GridType) {
-    val boxModifier = modifier
+fun SnakeGrid(gridType: GridType) {
+    val boxModifier = Modifier
         .padding(0.dp)
         .border(getBorderStroke(gridType))
         .size(GRID_SIZE_DP)
@@ -35,17 +35,18 @@ private fun getBorderStroke(gridType: GridType) =
     when (gridType) {
         GridType.BACKGROUND -> BorderStroke(0.dp, BACKGROUND_COLOR)
         GridType.FOOD -> BorderStroke(0.dp, SNAKE_FOOD_COLOR)
-        GridType.BODY -> BorderStroke(1.dp, Color.Gray)
+        GridType.BODY, GridType.HEAD -> BorderStroke(1.dp, Color.Gray)
     }
 
 private fun getBackground(gridType: GridType) =
     when (gridType) {
         GridType.BACKGROUND -> BACKGROUND_COLOR
         GridType.FOOD -> SNAKE_FOOD_COLOR
-        GridType.BODY -> SNAKE_BODY_COLOR
+        GridType.BODY, GridType.HEAD -> SNAKE_BODY_COLOR
     }
 
 enum class GridType {
+    HEAD,
     BODY,
     FOOD,
     BACKGROUND
