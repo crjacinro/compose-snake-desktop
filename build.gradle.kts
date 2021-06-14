@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.10"
-    id("org.jetbrains.compose") version "0.4.0"
+    id("org.jetbrains.compose") version "0.5.0-build224"
 }
 
 group = "me.sevi"
