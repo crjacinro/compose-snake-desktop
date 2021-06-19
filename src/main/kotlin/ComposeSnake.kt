@@ -25,11 +25,11 @@ fun main() = application {
         size = IntSize(WINDOW_SIZE, WINDOW_SIZE + WINDOW_HEIGHT_OFFSET),
         centered = true
     ) {
-        val initGridState = drawSnakeData(initialBodyPosition, FOOD_INIT_POSITION)
-        val gridData = remember { mutableStateOf(initGridState) }
+        val snakeState = remember { State() }
+        val snakeData = drawSnakeData(snakeState.getSnakePosition(), snakeState.getFoodPosition())
 
-        var xDirection = 0
-        var yDirection = 0
+        val initGrid = remember { mutableStateOf(snakeData) }
+        val gridState = remember { mutableStateOf(initGrid) }
 
         LocalAppWindow.current.keyboard.onKeyEvent = {
             var handled = false
@@ -37,37 +37,29 @@ fun main() = application {
                 when (it.key) {
                     Key.DirectionUp -> {
                         println("Up pressed")
-                        xDirection = 0
-                        yDirection++
                         handled = true
-//                        gridData.value = gridData.value.moveSnake(xDirection, yDirection)
+                        snakeState.moveSnakeUp()
                     }
                     Key.DirectionDown -> {
                         println("Down pressed")
-                        xDirection = 0
-                        yDirection--
                         handled = true
-//                        gridData.value = gridData.moveSnake(xDirection, yDirection)
+                        snakeState.moveSnakeDown()
                     }
                     Key.DirectionRight -> {
                         println("Right pressed")
-                        xDirection++
-                        yDirection = 0
                         handled = true
-                        gridData.value = gridData.value.moveSnake(xDirection, yDirection)
+                        snakeState.moveSnakeRight()
                     }
                     Key.DirectionLeft -> {
                         println("Left pressed")
-                        xDirection--
-                        yDirection = 0
                         handled = true
-//                        gridData = gridData.moveSnake(xDirection, yDirection)
+                        snakeState.moveSnakeLeft()
                     }
                 }
             }
             handled
         }
-        SnakeApp(gridData.value)
+        SnakeApp(gridState.value.value)
     }
 }
 

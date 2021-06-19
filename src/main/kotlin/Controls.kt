@@ -1,18 +1,4 @@
-fun List<List<GridType>>.moveSnake(deltaX: Int, deltaY: Int): List<List<GridType>> {
-    val mutableGrid = refreshedBackground()
 
-    for (i in 0 until WINDOW_WIDTH) {
-        for (j in 0 until WINDOW_HEIGHT) {
-            if (this[i][j] == GridType.HEAD) {
-                mutableGrid[newXPosition(i, deltaX)][newYPosition(j, deltaY)] = GridType.HEAD
-            } else if (this[i][j] == GridType.BODY) {
-                mutableGrid[i][j] = GridType.BACKGROUND
-            }
-        }
-    }
-
-    return mutableGrid
-}
 
 fun refreshedBackground(): MutableList<MutableList<GridType>> {
     val mutableGrid = MutableList(NUMBER_OF_GRIDS_PER_SIDE) {

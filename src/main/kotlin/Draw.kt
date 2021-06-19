@@ -2,15 +2,15 @@ fun drawSnakeData(snakeBody: List<Position>, foodPosition: Position): List<List<
     val grid = refreshedBackground()
 
     snakeBody.forEach {
-        grid[it.x][it.y] = GridType.BODY
+        grid[it.row][it.column] = GridType.BODY
     }
 
     snakeBody.last().let {
-        grid[it.x][it.y] = GridType.HEAD
+        grid[it.row][it.column] = GridType.HEAD
     }
 
     foodPosition.let {
-        grid[it.x][it.y] = GridType.FOOD
+        grid[it.row][it.column] = GridType.FOOD
     }
 
     return grid
