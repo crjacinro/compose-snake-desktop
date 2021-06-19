@@ -1,6 +1,3 @@
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-
 class State {
     private var snakeBody: List<Position> = emptyList()
     private var snakeHead: Position
@@ -12,7 +9,7 @@ class State {
         snakeHead = snakeBody.last()
     }
 
-    suspend fun moveSnake() {
+    fun moveSnake() {
         when (direction) {
             Direction.RIGHT -> moveSnakeRight()
             Direction.LEFT -> moveSnakeLeft()
@@ -21,28 +18,28 @@ class State {
         }
     }
 
-    suspend fun moveSnakeRight(): List<Position> {
+    fun moveSnakeRight(): List<Position> {
         snakeHead = Position(snakeHead.row, snakeHead.column + 1)
         direction = Direction.RIGHT
         updateBody()
         return snakeBody
     }
 
-    suspend fun moveSnakeLeft(): List<Position> {
+    fun moveSnakeLeft(): List<Position> {
         snakeHead = Position(snakeHead.row, snakeHead.column - 1)
         direction = Direction.LEFT
         updateBody()
         return snakeBody
     }
 
-    suspend fun moveSnakeUp(): List<Position> {
+    fun moveSnakeUp(): List<Position> {
         snakeHead = Position(snakeHead.row - 1, snakeHead.column)
         direction = Direction.UP
         updateBody()
         return snakeBody
     }
 
-    suspend fun moveSnakeDown(): List<Position> {
+    fun moveSnakeDown(): List<Position> {
         snakeHead = Position(snakeHead.row + 1, snakeHead.column)
         direction = Direction.DOWN
         updateBody()
@@ -53,7 +50,7 @@ class State {
         snakeBody = snakeBody.takeLast(snakeBody.size - 1) + snakeHead
     }
 
-    suspend fun drawSnakeDataGrid(): List<List<GridType>> {
+    fun drawSnakeDataGrid(): List<List<GridType>> {
         val grid = refreshedBackground()
 
         snakeBody.forEach {
@@ -69,11 +66,6 @@ class State {
         }
 
         return grid
-    }
-
-    fun drawInitGrid(): List<List<GridType>> = runBlocking {
-        val grid = async { drawSnakeDataGrid() }
-        grid.await()
     }
 
     private fun setInitSnakeBody() {
