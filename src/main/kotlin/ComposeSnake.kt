@@ -16,6 +16,14 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.window.application
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+val snakeState = State()
+val scope = CoroutineScope(Dispatchers.Main)
+
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() = application {
@@ -25,41 +33,43 @@ fun main() = application {
         size = IntSize(WINDOW_SIZE, WINDOW_SIZE + WINDOW_HEIGHT_OFFSET),
         centered = true
     ) {
-        val snakeState = remember { State() }
-        val snakeData = drawSnakeData(snakeState.getSnakePosition(), snakeState.getFoodPosition())
-
-        val initGrid = remember { mutableStateOf(snakeData) }
-        val gridState = remember { mutableStateOf(initGrid) }
+        val grid = remember { mutableStateOf(snakeState.drawInitGrid()) }
 
         LocalAppWindow.current.keyboard.onKeyEvent = {
             var handled = false
             if (it.type == KeyEventType.KeyDown) {
                 when (it.key) {
                     Key.DirectionUp -> {
-                        println("Up pressed")
                         handled = true
-                        snakeState.moveSnakeUp()
+                        scope.launch { snakeState.moveSnakeUp() }
                     }
                     Key.DirectionDown -> {
-                        println("Down pressed")
                         handled = true
-                        snakeState.moveSnakeDown()
+                        scope.launch { snakeState.moveSnakeDown() }
                     }
                     Key.DirectionRight -> {
-                        println("Right pressed")
                         handled = true
-                        snakeState.moveSnakeRight()
+                        scope.launch { snakeState.moveSnakeRight() }
                     }
                     Key.DirectionLeft -> {
-                        println("Left pressed")
                         handled = true
-                        snakeState.moveSnakeLeft()
+                        scope.launch { snakeState.moveSnakeLeft() }
                     }
+                }
+                scope.launch {
+                    grid.value = snakeState.drawSnakeDataGrid()
                 }
             }
             handled
         }
-        SnakeApp(gridState.value.value)
+        SnakeApp(grid.value)
+        scope.launch {
+            while (true) {
+                delay(1000)
+                snakeState.moveSnake()
+                grid.value = snakeState.drawSnakeDataGrid()
+            }
+        }
     }
 }
 
