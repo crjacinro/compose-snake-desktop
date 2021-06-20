@@ -1,12 +1,18 @@
 class State {
     private var snakeBody: List<Position> = emptyList()
-    private var snakeHead: Position
-    private var foodPosition = FOOD_INIT_POSITION
+    private var snakeHead: Position = Position(0, 0)
+    private var foodPosition: Position = FOOD_INIT_POSITION
     private var direction = Direction.RIGHT
 
     init {
+        initState()
+    }
+
+    private fun initState() {
         setInitSnakeBody()
         snakeHead = snakeBody.last()
+        foodPosition = FOOD_INIT_POSITION
+        direction = Direction.RIGHT
     }
 
     fun moveSnake() {
@@ -46,13 +52,40 @@ class State {
         return snakeBody
     }
 
+    fun drawSnakeDataGrid(): List<List<GridType>> {
+        val grid = refreshedBackground()
+
+        snakeBody.forEach {
+            grid[it.row][it.column] = GridType.BODY
+        }
+
+        snakeBody.last().let {
+            grid[it.row][it.column] = GridType.HEAD
+        }
+
+        foodPosition.let {
+            grid[it.row][it.column] = GridType.FOOD
+        }
+
+        return grid
+    }
+
     private fun updateState() {
         updateBody()
+
+        if (isSnakeHitBody()) {
+            initState()
+        }
 
         if (isFoodEaten()) {
             updateFood()
         }
     }
+
+    private fun isSnakeHitBody() =
+        snakeBody
+            .take(snakeBody.size - 1)
+            .any { snakeHead.row == it.row && snakeHead.column == it.column }
 
     private fun updateBody() {
         snakeBody = if (isFoodEaten()) {
@@ -74,30 +107,16 @@ class State {
         foodPosition = Position(row, column)
     }
 
-    private fun isPositionOccupied(row: Int, column: Int) =
+    private fun isPositionOccupiedByBody(row: Int, column: Int) =
         snakeBody.any { it.row == row && it.column == column }
-                || (foodPosition.row == row && foodPosition.column == column)
 
+    private fun isPositionOccupiedByFood(row: Int, column: Int) =
+        foodPosition.row == row && foodPosition.column == column
+
+    private fun isPositionOccupied(row: Int, column: Int) =
+        isPositionOccupiedByBody(row, column) && isPositionOccupiedByFood(row, column)
 
     private fun isFoodEaten() = snakeHead == foodPosition
-
-    fun drawSnakeDataGrid(): List<List<GridType>> {
-        val grid = refreshedBackground()
-
-        snakeBody.forEach {
-            grid[it.row][it.column] = GridType.BODY
-        }
-
-        snakeBody.last().let {
-            grid[it.row][it.column] = GridType.HEAD
-        }
-
-        foodPosition.let {
-            grid[it.row][it.column] = GridType.FOOD
-        }
-
-        return grid
-    }
 
     private fun setInitSnakeBody() {
         val body = mutableListOf<Position>()
