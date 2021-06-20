@@ -73,7 +73,7 @@ class State {
     private fun updateState() {
         updateBody()
 
-        if (isSnakeHitBody()) {
+        if (isSnakeHitBody() || isSnakeHitWall()) {
             initState()
         }
 
@@ -81,6 +81,10 @@ class State {
             updateFood()
         }
     }
+
+    private fun isSnakeHitWall() =
+        snakeHead.row < 0 || snakeHead.row >= NUMBER_OF_GRIDS_PER_SIDE
+                || snakeHead.column < 0 || snakeHead.column >= NUMBER_OF_GRIDS_PER_SIDE
 
     private fun isSnakeHitBody() =
         snakeBody
