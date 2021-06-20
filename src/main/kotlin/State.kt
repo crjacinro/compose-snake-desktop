@@ -21,34 +21,65 @@ class State {
     fun moveSnakeRight(): List<Position> {
         snakeHead = Position(snakeHead.row, snakeHead.column + 1)
         direction = Direction.RIGHT
-        updateBody()
+        updateState()
         return snakeBody
     }
 
     fun moveSnakeLeft(): List<Position> {
         snakeHead = Position(snakeHead.row, snakeHead.column - 1)
         direction = Direction.LEFT
-        updateBody()
+        updateState()
         return snakeBody
     }
 
     fun moveSnakeUp(): List<Position> {
         snakeHead = Position(snakeHead.row - 1, snakeHead.column)
         direction = Direction.UP
-        updateBody()
+        updateState()
         return snakeBody
     }
 
     fun moveSnakeDown(): List<Position> {
         snakeHead = Position(snakeHead.row + 1, snakeHead.column)
         direction = Direction.DOWN
-        updateBody()
+        updateState()
         return snakeBody
     }
 
-    private fun updateBody() {
-        snakeBody = snakeBody.takeLast(snakeBody.size - 1) + snakeHead
+    private fun updateState() {
+        updateBody()
+
+        if (isFoodEaten()) {
+            updateFood()
+        }
     }
+
+    private fun updateBody() {
+        snakeBody = if (isFoodEaten()) {
+            snakeBody + snakeHead
+        } else {
+            snakeBody.takeLast(snakeBody.size - 1) + snakeHead
+        }
+    }
+
+    private fun updateFood() {
+        var row = (0 until NUMBER_OF_GRIDS_PER_SIDE).random()
+        var column = (0 until NUMBER_OF_GRIDS_PER_SIDE).random()
+
+        while (isPositionOccupied(row, column)) {
+            row = (0 until NUMBER_OF_GRIDS_PER_SIDE).random()
+            column = (0 until NUMBER_OF_GRIDS_PER_SIDE).random()
+        }
+
+        foodPosition = Position(row, column)
+    }
+
+    private fun isPositionOccupied(row: Int, column: Int) =
+        snakeBody.any { it.row == row && it.column == column }
+                || (foodPosition.row == row && foodPosition.column == column)
+
+
+    private fun isFoodEaten() = snakeHead == foodPosition
 
     fun drawSnakeDataGrid(): List<List<GridType>> {
         val grid = refreshedBackground()

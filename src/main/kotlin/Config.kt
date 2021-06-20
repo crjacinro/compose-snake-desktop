@@ -11,7 +11,7 @@ const val WINDOW_HEIGHT_OFFSET = 22
 val GRID_SIZE_DP = GRID_SIZE.dp
 
 // Game Configuration
-const val GAME_SPEED = 20
+const val GAME_SPEED = 80
 const val SNAKE_INIT_SIZE = 10
 val SNAKE_INIT_POSITION = Position(0, 0)
 val FOOD_INIT_POSITION = Position(19, 19)
