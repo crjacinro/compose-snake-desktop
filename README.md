@@ -1,11 +1,16 @@
-# compose-snake-desktop
+# Snake App using Compose for Desktop
+
 A simple Snake desktop application to demonstrate the use of Compose UI toolkit for Desktop platform with Kotlin.
 
+![snake-demo](snake-compose-desktop.gif)
+
 ## Requirements
+
 - IntelliJ IDEA 2020.3.4 (or latest)
 - JDK 11
 
 ## Technologies
+
 - [Compose UI](https://developer.android.com/jetpack/compose)
 - [Compose for Desktop](https://www.jetbrains.com/lp/compose/)
 
