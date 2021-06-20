@@ -52,12 +52,11 @@ fun main() = application {
                         snakeState.moveSnakeLeft()
                     }
                 }
-
                 grid.value = snakeState.drawSnakeDataGrid()
-
             }
             handled
         }
+
         SnakeApp(grid.value)
 
         LaunchedEffect(Unit) {

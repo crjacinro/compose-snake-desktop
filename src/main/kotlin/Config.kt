@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.dp
 // Window Configuration
 const val GRID_SIZE = 15
 const val WINDOW_SIZE = 600
-const val NUMBER_OF_GRIDS_PER_SIDE = (WINDOW_SIZE.div(GRID_SIZE))
+const val NUMBER_OF_GRIDS_PER_SIDE = WINDOW_SIZE.div(GRID_SIZE)
 const val WINDOW_WIDTH = NUMBER_OF_GRIDS_PER_SIDE
 const val WINDOW_HEIGHT = NUMBER_OF_GRIDS_PER_SIDE
 const val WINDOW_HEIGHT_OFFSET = 22

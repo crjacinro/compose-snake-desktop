@@ -25,6 +25,8 @@ class State {
     }
 
     fun moveSnakeRight(): List<Position> {
+        if (direction == Direction.LEFT) return moveSnakeLeft()
+
         snakeHead = Position(snakeHead.row, snakeHead.column + 1)
         direction = Direction.RIGHT
         updateState()
@@ -32,6 +34,8 @@ class State {
     }
 
     fun moveSnakeLeft(): List<Position> {
+        if (direction == Direction.RIGHT) return moveSnakeRight()
+
         snakeHead = Position(snakeHead.row, snakeHead.column - 1)
         direction = Direction.LEFT
         updateState()
@@ -39,6 +43,8 @@ class State {
     }
 
     fun moveSnakeUp(): List<Position> {
+        if (direction == Direction.DOWN) return moveSnakeDown()
+
         snakeHead = Position(snakeHead.row - 1, snakeHead.column)
         direction = Direction.UP
         updateState()
@@ -46,6 +52,8 @@ class State {
     }
 
     fun moveSnakeDown(): List<Position> {
+        if (direction == Direction.UP) return moveSnakeUp()
+
         snakeHead = Position(snakeHead.row + 1, snakeHead.column)
         direction = Direction.DOWN
         updateState()
@@ -133,6 +141,20 @@ class State {
 
         snakeBody = body
     }
+}
+
+fun refreshedBackground(): MutableList<MutableList<GridType>> {
+    val mutableGrid = MutableList(NUMBER_OF_GRIDS_PER_SIDE) {
+        MutableList(NUMBER_OF_GRIDS_PER_SIDE) { GridType.BACKGROUND }
+    }
+
+    for (i in 0 until WINDOW_WIDTH) {
+        for (j in 0 until WINDOW_HEIGHT) {
+            mutableGrid[i][j] = GridType.BACKGROUND
+        }
+    }
+
+    return mutableGrid
 }
 
 enum class Direction {
