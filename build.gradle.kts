@@ -11,13 +11,11 @@ group = "me.sevi"
 version = "1.0.0"
 
 repositories {
-    jcenter()
+    google()
     mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
-
 dependencies {
-    testImplementation(kotlin("test-junit"))
     implementation(compose.desktop.currentOs)
 }
 
@@ -25,7 +23,7 @@ tasks.test {
     useJUnit()
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
 
@@ -37,4 +35,12 @@ compose.desktop {
             packageName = "Compose-Snake"
         }
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
